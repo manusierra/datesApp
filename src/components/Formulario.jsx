@@ -1,10 +1,12 @@
 import React, { Fragment, useState } from 'react';
+import shortid from 'shortid';
 
 /*
  * *********************************** Programación ****************************
  */
 
-const Formulario = () => {
+//? Importamos el prop de padre a hijo con destructuring.
+const Formulario = ({ crearCita }) => {
   //* Crear State para citas
 
   // Recoger datos formulario
@@ -41,25 +43,51 @@ const Formulario = () => {
       hora.trim() === '' ||
       sintomas.trim() === ''
     ) {
-      console.log('error');
+      setError(true);
+
       //? Colocar siempre un return en validaciones para evitar que se siga ejecutando.
       return;
     }
-    console.log('agregando... ');
+    // Eliminar mensaje de error al rellenar campos.
+    setError(false);
+
     // Asignar Id
+    //? Instalamos librería para generar id: UUID (npm i uuid) || SHORTID (npm i shortid)
+    //? Se importa en la cabecera como el resto de elementos
+    //? Importante generar un id porque cada elemento en React debe tener un ID único.
+    cita.id = shortid();
 
     // Crear la cita
-
+    //? Se deben generar en el listado principal para poder pasarlas a otros componentes mediante props.
+    crearCita(cita);
     // Reiniciar el formulario.
+    actualizarCita({
+      mascota: '',
+      propietario: '',
+      fecha: '',
+      hora: '',
+      sintomas: '',
+    });
   };
 
+  //* Crear State para mensajes de error.
+
+  const [error, setError] = useState(false);
+
   /*
-   * ****************************** HTML ******************************
+   * ****************************** JSX ******************************
    */
 
   return (
     <Fragment>
       <h2>Crear Cita</h2>
+      {
+        /*? En JSX sólo ternarios.        */
+        error ? (
+          <p className="alerta-error"> Todos los campos son obligatorios</p>
+        ) : null
+      }
+
       <form action="" onSubmit={submitCita}>
         <label htmlFor="">Nombre Mascota</label>
         <input
@@ -103,13 +131,13 @@ const Formulario = () => {
 
         <label htmlFor="">Síntomas</label>
         <textarea
-          name={sintomas}
+          name="sintomas"
           id=""
           cols="30"
           rows="10"
           className="u-full-width"
           onChange={actualizarState}
-          value="sintomas"
+          value={sintomas}
         ></textarea>
 
         <button type="submit" className="u-full-width button-primary">

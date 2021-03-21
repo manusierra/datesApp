@@ -88,11 +88,12 @@ input[type='time'] {
 }
 
 .alerta-error {
-  background-color: white;
-  color: red;
+  background-color: #0bb;
+  color: yellow;
   padding: 1rem;
   font-size: 2rem;
   text-transform: uppercase;
   text-align: center;
   font-family: 'Staatliches', cursive;
+  border-radius: 4px;
 }
