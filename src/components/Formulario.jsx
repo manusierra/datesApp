@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import shortid from 'shortid';
+import PropTypes from 'prop-types'; //? Para documentar
 
 /*
  * *********************************** Programación ****************************
@@ -146,6 +147,11 @@ const Formulario = ({ crearCita }) => {
       </form>
     </Fragment>
   );
+};
+
+//* Documentar componentes -> PropTypes
+Formulario.propTypes = {
+  crearCita: PropTypes.func.isRequired,
 };
 
 export default Formulario;
